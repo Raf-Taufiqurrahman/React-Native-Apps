@@ -1,53 +1,28 @@
 import React from 'react';
 import { View } from 'react-native';
-import { Skeleton, SkeletonText } from '../skeleton'
+import { Skeleton, SkeletonText } from '@/components/ui/skeleton';
 
 const CardItemSkeleton = () => {
   return (
-    <View style={{ width: '100%', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', padding: 16, backgroundColor: 'white', borderRadius: 8, borderWidth: 1, borderColor: '#e5e7eb' }}>
+    <View className="w-full flex flex-row items-center justify-between p-4 bg-white rounded-lg border border-gray-200">
       {/* Bagian Kiri: Gambar dan Teks */}
-      <View style={{ flexDirection: 'row', alignItems: 'center', gap: 16 }}>
+      <View className="flex flex-row items-center gap-4">
         {/* Skeleton untuk Gambar */}
-        <Skeleton
-            style={{ width: 48, height: 48, borderRadius: 8 }}
-            startColor="bg-background-200"
-            isLoaded={false}
-        />
+        <Skeleton className="w-12 h-12 rounded-full bg-background-200" isLoaded={false} />
 
         {/* Skeleton untuk Teks */}
-        <View style={{ flexDirection: 'column', gap: 4 }}>
-          <View style={{ flexDirection: 'row', alignItems: 'center', gap: 4 }}>
-            <SkeletonText
-                style={{ width: 100, height: 14 }}
-                startColor="bg-background-200"
-                isLoaded={false}
-            />
-            <SkeletonText
-                style={{ width: 80, height: 14 }}
-                startColor="bg-background-200"
-                isLoaded={false}
-            />
+        <View className="flex flex-col gap-1">
+          <View className="flex flex-row items-center gap-1">
+            <SkeletonText className="w-24 h-3 bg-background-200" isLoaded={false} />
+            <SkeletonText className="w-20 h-3 bg-background-200" isLoaded={false} />
           </View>
-            <SkeletonText
-                style={{ width: 120, height: 12 }}
-                startColor="bg-background-200"
-                isLoaded={false}
-            />
+          <SkeletonText className="w-28 h-3 bg-background-200" isLoaded={false} />
         </View>
       </View>
 
-      {/* Bagian Kanan: Ikon Edit dan Hapus */}
-      <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
-        <Skeleton
-          style={{ width: 24, height: 24, borderRadius: 12 }}
-          startColor="bg-background-200"
-          isLoaded={false}
-        />
-        <Skeleton
-          style={{ width: 24, height: 24, borderRadius: 12 }}
-          startColor="bg-background-200"
-          isLoaded={false}
-        />
+      {/* Bagian Kanan: Ikon Menu */}
+      <View className="flex flex-row items-center gap-2">
+        <Skeleton className="w-6 h-2 bg-background-200" isLoaded={false} />
       </View>
     </View>
   );

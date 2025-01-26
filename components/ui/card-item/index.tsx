@@ -7,7 +7,9 @@ import {
     EditIcon,
     Icon,
     TrashIcon,
+    ThreeDotsIcon
   } from "@/components/ui/icon"
+import { Menu, MenuItem, MenuItemLabel } from '../menu';
 interface CardProps {
     data : {
         name: string;
@@ -15,10 +17,11 @@ interface CardProps {
         gender: string;
         image: string;
         departement: string;
-    }
+    },
+    modalDelete: () => void;
 }
 
-const CardItem = ({ data }: CardProps) => {
+const CardItem = ({ data, modalDelete }: CardProps) => {
     return (
         <View className='w-full flex flex-row items-center justify-between p-4 bg-white rounded-lg border border-gray-200'>
             {/* Bagian Kiri : Gambar dan Teks */}
@@ -27,7 +30,7 @@ const CardItem = ({ data }: CardProps) => {
                 <Image
                     size="sm"
                     source={{
-                        uri: "https://www.gravatar.com/avatar/b2b58f77632a6f5c46d30b08108baa57?d=mm&s=150",
+                        uri: data.image,
                     }}
                     className='rounded-full'
                     alt="image"
@@ -45,16 +48,30 @@ const CardItem = ({ data }: CardProps) => {
             
             {/* Bagian Kanan : Edit dan Hapus */}
             <View className='flex flex-row items-center gap-2'>
-                <Link href='/(tabs)/users/create'>
-                    <View>
-                        <Icon as={EditIcon} className='text-gray-600 hover:text-gray-800' />
-                    </View>
-                </Link>
-                <Button variant='link' className='p-0'>
-                    <ButtonText>
-                        <Icon as={TrashIcon} className='text-gray-600 hover:text-gray-800' />
-                    </ButtonText>
-                </Button>
+            <Menu
+                placement="bottom right"
+                offset={0}
+                trigger={({ ...triggerProps }) => {
+                    return (
+                    <Button {...triggerProps} variant='outline'>
+                        <Icon as={ThreeDotsIcon}/>
+                    </Button>
+                    )
+                }}
+            >
+                <MenuItem key="edit" textValue='Edit'>
+                    <Icon as={EditIcon} size='sm' className='mr-2'/>
+                    <MenuItemLabel size='sm'>
+                        Edit
+                    </MenuItemLabel>
+                </MenuItem>
+                <MenuItem key="delete" textValue='delete' onPress={modalDelete}>
+                    <Icon as={TrashIcon} size='sm' className='mr-2'/>
+                    <MenuItemLabel size='sm'>
+                        Delete
+                    </MenuItemLabel>
+                </MenuItem>
+            </Menu>
             </View>
         </View>
     );

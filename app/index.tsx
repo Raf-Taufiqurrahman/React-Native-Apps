@@ -8,14 +8,21 @@ import CardItemSkeleton from '@/components/ui/skeleton-card-item';
 import { User } from '@/types/user';
 import { Link } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
-
+import { ModalDelete } from '@/components/ui/modal-delete';
 export default function Index() {
     const [search, setSearch] = useState('');
-
+    const [modal, setModal] = useState(false);
+    const [id, setId] = useState<string | number>('');
+    
     const { data, error, isLoading, isFetching } = useGetUsersQuery(
         { name: search },
         { refetchOnFocus: true }
     );
+
+    const openModal = (userId : number) => {
+        setModal(true);
+        setId(userId)
+    }
 
     return (
       <SafeAreaView>
@@ -30,7 +37,7 @@ export default function Index() {
             </Text>
           </Link>
         </View>
-        <ScrollView className='px-6 mb-20'>
+        <ScrollView className='px-6 mb-20 pb-2'>
             <View className='py-6'>
                 <Input className='bg-white rounded-lg border-gray-200'>
                   <InputField
@@ -54,13 +61,14 @@ export default function Index() {
                 ) : data?.data?.length > 0 ? (
                     // Tampilkan data yang diterima dari server
                     data.data.map((user: User, index: number) => (
-                        <CardItem data={user} key={index} />
+                        <CardItem data={user} key={index} modalDelete={() => openModal(user.id)} />
                     ))
                 ) : (
                     // Tampilkan pesan jika tidak ada data
                     <Text className='text-gray-500 text-center'>No users found.</Text>
                 )}
             </View>
+            <ModalDelete showModal={modal} onOpenChange={setModal} userId={id}/>
         </ScrollView>
       </SafeAreaView>
     );

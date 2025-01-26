@@ -30,7 +30,15 @@ export const api = createApi({
             }),
             invalidatesTags: ['Users'],
         }),
+        // endpoint untuk menghapus data user
+        deleteUser: builder.mutation({
+            query: (id) => ({
+                url: `/users/${id}`,
+                method: 'DELETE',
+            }),
+            invalidatesTags: ['Users'],
+        }),
     })
 })
 
-export const { useGetUsersQuery, useCreateUserMutation } = api;
+export const { useGetUsersQuery, useCreateUserMutation, useDeleteUserMutation } = api;
