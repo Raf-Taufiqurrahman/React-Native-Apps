@@ -8,6 +8,8 @@ export const api = createApi({
     baseQuery: fetchBaseQuery({
         baseUrl: 'https://mam-api-6e353e4d80e7.herokuapp.com',
     }),
+    // nama tags
+    tagTypes: ['Users'],
     endpoints: (builder) => ({
         // endpoint untuk mengambil seluruh data users
         getUsers : builder.query({
@@ -16,9 +18,19 @@ export const api = createApi({
                     return `/users?name=${name}`;
                 
                 return '/users';
-            }
-        })
+            },
+            providesTags: ['Users'],
+        }),
+        // endpoint untuk membuat data user
+        createUser: builder.mutation({
+            query: (data) => ({
+                url: '/users',
+                method: 'POST',
+                body: data,
+            }),
+            invalidatesTags: ['Users'],
+        }),
     })
 })
 
-export const { useGetUsersQuery } = api;
+export const { useGetUsersQuery, useCreateUserMutation } = api;
