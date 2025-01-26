@@ -28,6 +28,10 @@ const CardItem = ({ data, modalDelete }: CardProps) => {
         router.push(`/${data.id}`)
     }
 
+    const handleEdit = () => {
+        router.push(`/${data.id}/edit`)
+    }
+
     return (
         <View className='w-full flex flex-row items-center justify-between p-4 bg-white rounded-lg border border-gray-200'>
             {/* Bagian Kiri : Gambar dan Teks */}
@@ -70,7 +74,7 @@ const CardItem = ({ data, modalDelete }: CardProps) => {
                         Detail
                     </MenuItemLabel>
                 </MenuItem>
-                <MenuItem key="edit" textValue='Edit'>
+                <MenuItem key="edit" textValue='Edit' onPress={handleEdit}>
                     <Icon as={EditIcon} size='sm' className='mr-2'/>
                     <MenuItemLabel size='sm'>
                         Edit

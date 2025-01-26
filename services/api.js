@@ -13,7 +13,7 @@ export const api = createApi({
     endpoints: (builder) => ({
         // endpoint untuk mengambil seluruh data users
         getUsers : builder.query({
-            query: ({ name } = {}) => {
+            query: ({ name }) => {
                 if(name) 
                     return `/users?name=${name}`;
                 
@@ -34,6 +34,15 @@ export const api = createApi({
             }),
             invalidatesTags: ['Users'],
         }),
+        // endpoint untuk mengupdate data user
+        updateUser: builder.mutation({
+            query: ({ id, ...data }) => ({
+                url: `/users/${id}`,
+                method: 'PUT',
+                body: data,
+            }),
+            invalidatesTags: ['Users'],
+        }),
         // endpoint untuk menghapus data user
         deleteUser: builder.mutation({
             query: (id) => ({
@@ -45,4 +54,4 @@ export const api = createApi({
     })
 })
 
-export const { useGetUsersQuery, useGetUserByIdQuery, useCreateUserMutation, useDeleteUserMutation } = api;
+export const { useGetUsersQuery, useGetUserByIdQuery, useCreateUserMutation, useUpdateUserMutation, useDeleteUserMutation } = api;

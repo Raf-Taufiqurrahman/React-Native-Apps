@@ -8,17 +8,15 @@ import { Motion, AnimatePresence } from '@legendapp/motion';
 import type { VariantProps } from '@gluestack-ui/nativewind-utils';
 
 const menuStyle = tva({
-  base: 'rounded-md bg-background-0 border border-outline-100 p-1 shadow-hard-5',
+  base: 'rounded-md bg-background-0 border border-outline-100 p-1 shadow-hard-5 min-w-[150px] overflow-hidden',
 });
 
 const menuItemStyle = tva({
-  base: 'min-w-[200px] p-3 flex-row items-center rounded data-[hover=true]:bg-background-50 data-[active=true]:bg-background-100 data-[focus=true]:bg-background-50 data-[focus=true]:web:outline-none data-[focus=true]:web:outline-0 data-[disabled=true]:opacity-40 data-[disabled=true]:web:cursor-not-allowed data-[focus-visible=true]:web:outline-2 data-[focus-visible=true]:web:outline-primary-700 data-[focus-visible=true]:web:outline data-[focus-visible=true]:web:cursor-pointer data-[disabled=true]:data-[focus=true]:bg-transparent',
+  base: 'min-w-[150px] p-3 flex-row items-center rounded data-[hover=true]:bg-background-50 data-[active=true]:bg-background-100 data-[focus=true]:bg-background-50 data-[focus=true]:web:outline-none data-[focus=true]:web:outline-0 data-[disabled=true]:opacity-40 data-[disabled=true]:web:cursor-not-allowed data-[focus-visible=true]:web:outline-2 data-[focus-visible=true]:web:outline-primary-700 data-[focus-visible=true]:web:outline data-[focus-visible=true]:web:cursor-pointer data-[disabled=true]:data-[focus=true]:bg-transparent',
 });
 
 const menuBackdropStyle = tva({
   base: 'absolute top-0 bottom-0 left-0 right-0 web:cursor-default',
-  // add this classnames if you want to give background color to backdrop
-  // opacity-50 bg-background-500,
 });
 
 const menuSeparatorStyle = tva({
@@ -27,7 +25,6 @@ const menuSeparatorStyle = tva({
 
 const menuItemLabelStyle = tva({
   base: 'text-typography-700 font-normal font-body',
-
   variants: {
     isTruncated: {
       true: 'web:truncate',
@@ -70,13 +67,14 @@ const BackdropPressable = React.forwardRef<
   React.ElementRef<typeof Pressable>,
   React.ComponentPropsWithoutRef<typeof Pressable> &
     VariantProps<typeof menuBackdropStyle>
->(({ className, ...props }, ref) => {
+>(({ className, onPress, ...props }, ref) => {
   return (
     <Pressable
       ref={ref}
       className={menuBackdropStyle({
         class: className,
       })}
+      onPress={onPress}
       {...props}
     />
   );
@@ -101,17 +99,19 @@ const Item = React.forwardRef<
   );
 });
 
-const Separator = React.forwardRef(
-  ({ className, ...props }: any, ref?: any) => {
-    return (
-      <View
-        ref={ref}
-        className={menuSeparatorStyle({ class: className })}
-        {...props}
-      />
-    );
-  }
-);
+const Separator = React.forwardRef<
+  React.ElementRef<typeof View>,
+  { className?: string } & React.ComponentPropsWithoutRef<typeof View>
+>(({ className, ...props }, ref) => {
+  return (
+    <View
+      ref={ref}
+      className={menuSeparatorStyle({ class: className })}
+      {...props}
+    />
+  );
+});
+
 export const UIMenu = createMenu({
   Root: Motion.View,
   Item: Item,
@@ -135,7 +135,7 @@ const Menu = React.forwardRef<React.ElementRef<typeof UIMenu>, IMenuProps>(
         ref={ref}
         initial={{
           opacity: 0,
-          scale: 0.8,
+          scale: 0.9,
         }}
         animate={{
           opacity: 1,
@@ -143,11 +143,11 @@ const Menu = React.forwardRef<React.ElementRef<typeof UIMenu>, IMenuProps>(
         }}
         exit={{
           opacity: 0,
-          scale: 0.8,
+          scale: 0.9,
         }}
         transition={{
           type: 'timing',
-          duration: 100,
+          duration: 150,
         }}
         className={menuStyle({
           class: className,

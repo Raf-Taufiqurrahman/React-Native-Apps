@@ -60,8 +60,8 @@ export default function Index() {
                     <Text className='text-red-500 text-center'>Something went wrong</Text>
                 ) : data?.data?.length > 0 ? (
                     // Tampilkan data yang diterima dari server
-                    data.data.map((user: User, index: number) => (
-                        <CardItem data={user} key={index} modalDelete={() => openModal(user.id)} />
+                    data.data.map((user: User) => (
+                        <CardItem data={user} key={user.id} modalDelete={() => openModal(user.id)} />
                     ))
                 ) : (
                     // Tampilkan pesan jika tidak ada data
