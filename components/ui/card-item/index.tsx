@@ -1,17 +1,19 @@
 import { View, Text } from 'react-native';
 import React from 'react';
-import { Link } from 'expo-router';
-import { Button, ButtonText } from '@/components/ui/button';
+import { Button } from '@/components/ui/button';
 import { Image } from '@/components/ui/image';
 import {
     EditIcon,
     Icon,
     TrashIcon,
-    ThreeDotsIcon
+    ThreeDotsIcon,
+    EyeIcon
   } from "@/components/ui/icon"
 import { Menu, MenuItem, MenuItemLabel } from '../menu';
+import { router } from 'expo-router';
 interface CardProps {
     data : {
+        id: number;
         name: string;
         email: string;
         gender: string;
@@ -22,6 +24,10 @@ interface CardProps {
 }
 
 const CardItem = ({ data, modalDelete }: CardProps) => {
+    const handleDetail = () => {
+        router.push(`/${data.id}`)
+    }
+
     return (
         <View className='w-full flex flex-row items-center justify-between p-4 bg-white rounded-lg border border-gray-200'>
             {/* Bagian Kiri : Gambar dan Teks */}
@@ -47,10 +53,9 @@ const CardItem = ({ data, modalDelete }: CardProps) => {
             </View>
             
             {/* Bagian Kanan : Edit dan Hapus */}
-            <View className='flex flex-row items-center gap-2'>
             <Menu
                 placement="bottom right"
-                offset={0}
+                offset={5}
                 trigger={({ ...triggerProps }) => {
                     return (
                     <Button {...triggerProps} variant='outline'>
@@ -59,6 +64,12 @@ const CardItem = ({ data, modalDelete }: CardProps) => {
                     )
                 }}
             >
+                <MenuItem key="detail" textValue='Detail' onPress={handleDetail}>
+                    <Icon as={EyeIcon} size='sm' className='mr-2'/>
+                    <MenuItemLabel size='sm'>
+                        Detail
+                    </MenuItemLabel>
+                </MenuItem>
                 <MenuItem key="edit" textValue='Edit'>
                     <Icon as={EditIcon} size='sm' className='mr-2'/>
                     <MenuItemLabel size='sm'>
@@ -72,7 +83,6 @@ const CardItem = ({ data, modalDelete }: CardProps) => {
                     </MenuItemLabel>
                 </MenuItem>
             </Menu>
-            </View>
         </View>
     );
 };

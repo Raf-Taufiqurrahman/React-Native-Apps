@@ -21,6 +21,10 @@ export const api = createApi({
             },
             providesTags: ['Users'],
         }),
+        // endpoint untuk mengambil data user berdasarkan id
+        getUserById: builder.query({
+            query: (id) => `/users/${id}`,
+        }),
         // endpoint untuk membuat data user
         createUser: builder.mutation({
             query: (data) => ({
@@ -41,4 +45,4 @@ export const api = createApi({
     })
 })
 
-export const { useGetUsersQuery, useCreateUserMutation, useDeleteUserMutation } = api;
+export const { useGetUsersQuery, useGetUserByIdQuery, useCreateUserMutation, useDeleteUserMutation } = api;
