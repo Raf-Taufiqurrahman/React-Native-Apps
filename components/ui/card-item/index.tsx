@@ -21,15 +21,19 @@ interface CardProps {
 const CardItem = ({ data }: CardProps) => {
     return (
         <View className='w-full flex flex-row items-center justify-between p-4 bg-white rounded-lg border border-gray-200'>
+            {/* Bagian Kiri : Gambar dan Teks */}
             <View className='flex flex-row items-center gap-4'>
+                {/* Gambar */}
                 <Image
                     size="sm"
                     source={{
-                        uri: "https://images.unsplash.com/photo-1472214103451-9374bd1c798e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
+                        uri: "https://www.gravatar.com/avatar/b2b58f77632a6f5c46d30b08108baa57?d=mm&s=150",
                     }}
-                    className='rounded-lg'
+                    className='rounded-full'
                     alt="image"
                 />
+
+                {/* Teks */}
                 <View className='flex flex-col gap-1'>
                     <View className='flex flex-row items-center gap-1'>
                         <Text className='font-semibold text-sm'>{data.name}</Text>
@@ -38,6 +42,8 @@ const CardItem = ({ data }: CardProps) => {
                     <Text className='text-xs text-gray-400'>{data.departement} - {data.gender}</Text>
                 </View>
             </View>
+            
+            {/* Bagian Kanan : Edit dan Hapus */}
             <View className='flex flex-row items-center gap-2'>
                 <Link href='/(tabs)/users/create'>
                     <View>
